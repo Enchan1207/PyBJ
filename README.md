@@ -18,6 +18,7 @@ rebuilt all source using class.
 
 ## Usage
 ### Installation
-  1. clone this repository.
-  2. exec `python main.py` to execute.
-  
+clone this repository.
+
+### Exec
+run `python main.py` in this directory
