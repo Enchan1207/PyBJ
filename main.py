@@ -41,6 +41,14 @@ def main():
 
     #--CPUのターン
 
+    #次に何を引いても負けにならない(=20-13=7未満)なら引き続ける
+    cpc = calc(cpcard)
+    while cpc < 7:
+        rst = deck[random.randrange(len(deck))]
+        deck.remove(rst)
+        cpcard.append(rst)
+        cpc = calc(cpcard)
+
     #互いのカードの数値を計算
     print("カードの数値を計算します。")
     myc = calc(mycard)
@@ -49,7 +57,7 @@ def main():
     print("CPU:" + str(cpc))
 
     #勝敗判定
-    if(myc > 20):
+    if(myc > 20 or myc < cpc):
         print("あなたの負けです。")
     elif(myc <= 20 and myc > cpc):
         print("あなたの勝ちです。")
