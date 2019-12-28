@@ -22,6 +22,6 @@ class Deck(Card):
         if(len(self.deck) == 0):
             return -1
             
-        rst = self.deck[random.randrange(len(self.deck))]
+        rst = random.choice(self.deck)
         self.deck.remove(rst)
         return rst.getval()

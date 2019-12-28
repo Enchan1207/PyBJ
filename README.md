@@ -3,8 +3,8 @@
 ## OverView
 simple black jack game on python.
 
-## Latest Release - using class
-rebuilt all source using class.
+## Latest Release - use random.choise
+use `random.choise` to draw from deck.
 
 ## Content
  * main.py: main source
