@@ -2,89 +2,65 @@
 # ブラックジャックを書いてみる
 #
 
-import random
+from deck import Deck
+from hand import Hand
 
 #--
-deck = [] #山札
-mycard = [] #自分の手札
-cpcard = [] #CPUの手札
+deck = Deck()
+myhand = Hand()
+cphand = Hand()
 
-def main():
-    #--デッキ初期化
-    for n in range(52):
-        deck.append(n + 1)
+#--デッキ初期化
+deck.deckinit()
+print("デッキを初期化しました")
 
-    print(str(len(deck)) + "毎のカードでデッキを初期化しました")
+#--自分のターン
 
-    #--自分のターン
+flg = False
 
-    flg = False
-
-    while flg == False:
-        #カードを引く?
-        print("山札からカードを引きますか?(y/n)")
-        dat = input(">")
-        if(dat in ['Y', 'y']):
-            #--カードを引く
-            rst = deck[random.randrange(len(deck))]
-            deck.remove(rst)
-            mycard.append(rst)
-            print(getfig(rst) + "の" + str(getval(rst)) + "を引きました。")
-
+while flg == False:
+    #カードを引く?
+    print("山札からカードを引きますか?(y/n)")
+    dat = input(">")
+    if(dat in ['Y', 'y']):
+        newcd = deck.draw()
+        if(newcd != -1):
+            myhand.add(newcd)
         else:
-            #--引かずに次へ
-            print("カードを引かずに次へ進みます。")
+            print("山札が空です。")
             flg = True
 
-        myc = calc(mycard)
-        print("カードの数値:" + str(myc))
-
-    #--CPUのターン
-
-    #次に何を引いても負けにならない(=20-13=7未満)なら引き続ける
-    cpc = calc(cpcard)
-    while cpc < 7:
-        rst = deck[random.randrange(len(deck))]
-        deck.remove(rst)
-        cpcard.append(rst)
-        cpc = calc(cpcard)
-
-    #互いのカードの数値を計算
-    print("カードの数値を計算します。")
-    myc = calc(mycard)
-    cpc = calc(cpcard)
-    print("自分:" + str(myc))
-    print("CPU:" + str(cpc))
-
-    #勝敗判定
-    if(myc > 20 or myc < cpc):
-        print("あなたの負けです。")
-    elif(myc <= 20 and myc > cpc):
-        print("あなたの勝ちです。")
     else:
-        print("引き分けです。")
+        flg = True
 
-    return 0
+    myc = myhand.getsum()
+    print("カードの数値:" + str(myc))
 
+#--CPUのターン
 
-#--関数
+#次に何を引いても負けにならない(=20-13=7未満)なら引き続ける
+cpc = cphand.getsum()
+while cpc < 7:
+    cphand.add(deck.draw())
+    cpc = cphand.getsum()
 
-#カードの数値合計を計算
-def calc(cards):
-    val = 0
-    for card in cards:
-        val += getval(card)
-    
-    return val
+#TODO:
+#これだとwhileの最後に来たカードまたは一発目に引いた7以上のカードだけで勝負が決まってしまうので、
+#「勝負に行くかどうか」を考えなきゃならない
 
+#互いのカードの数値を計算
+print("カードの数値を計算します。")
+myc = myhand.getsum()
+cpc = cphand.getsum()
+print("自分:" + str(myc))
+print("CPU:" + str(cpc))
 
-#カードの数値を取得
-def getval(num):
-    return num - ((num - 1) // 13) * 13
+#勝敗判定
+if(myc > 20 or myc < cpc):
+    print("あなたの負けです。")
+elif(myc <= 20 and myc > cpc):
+    print("あなたの勝ちです。")
+else:
+    print("引き分けです。")
 
-#カードの種類を取得
-def getfig(num):
-    print(num)
-    return ["クローバー", "スペード", "ハート", "ダイヤ"][num // 14]
-
-main()
+exit(0)
