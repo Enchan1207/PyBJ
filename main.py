@@ -14,10 +14,15 @@ cphand = Hand()
 deck.deckinit()
 print("デッキを初期化しました")
 
+#--先にcpuもプレイヤーも強制的に一枚ドロー
+myhand.add(deck.draw())
+cphand.add(deck.draw())
+
 #--自分のターン
+myc = myhand.getsum()
+print("カードの数値:" + str(myc))
 
 flg = False
-
 while flg == False:
     #カードを引く?
     print("山札からカードを引きますか?(y/n)")
