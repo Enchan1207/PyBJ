@@ -1,4 +1,4 @@
-name: PythonBJ
+name: Build
 
 on: [push]
 
