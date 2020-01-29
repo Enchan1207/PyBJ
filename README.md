@@ -1,5 +1,7 @@
 # PyBJ
 
+![PythonBJ](https://github.com/Enchan1207/PyBJ/workflows/PythonBJ/badge.svg)
+
 ## OverView
 simple black jack game on python.
 
